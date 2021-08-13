@@ -12,10 +12,10 @@
 <!-- 
 employee/list.jsp, customer/detail.jsp, notice/modify.jsp
 -->
-<definition name="member/login" 
+<!-- <definition name="member/login" 
 				template="/WEB-INF/views/tiles/default.jsp">
 	<put-attribute name="content" value="/WEB-INF/views/member/login.jsp"/>
-</definition>
+</definition> -->
 <definition name="*/*" extends="layout">
 	<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
 </definition>

@@ -17,11 +17,12 @@ table tr td { text-align:left; }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
-<h3>회원가입</h3>
-
-<p class='w-pct40' style='margin:0 auto; text-align:right; padding-bottom:10px'>* 은 필수입력항목입니다</p>
-<form action="join" method="post">
-<table class='w-pct40'>
+<form method="post" action='join'>
+<div id='list-top'>
+<a href=""><img src="imgs/join.png"/></a>
+</div>
+<p class='w-pct30' style='margin:0 auto; text-align:right; padding-bottom:10px'>* 은 필수입력항목입니다</p>
+<table class='w-pct30'>
 <tr><th class='w-px120'>* 성명</th>
 	<td><input type='text' name='name' /></td>
 </tr>
@@ -56,9 +57,9 @@ table tr td { text-align:left; }
 		<a id='delete'><i class="font-img fas fa-times"></i></a></td>
 </tr>
 <tr><th>전화번호</th>
-	<td><input type='text' name='tel' class='w-px40' maxlength="3"/>
-		- <input type='text' name='tel' class='w-px40' maxlength="4"/>
-		- <input type='text' name='tel' class='w-px40' maxlength="4"/>
+	<td><input type='text' name='tel' class='w-px100' maxlength="3"/>
+		- <input type='text' name='tel' class='w-px100' maxlength="4"/>
+		- <input type='text' name='tel' class='w-px100' maxlength="4"/>
 	</td>
 </tr>
 <tr><th>주소</th>

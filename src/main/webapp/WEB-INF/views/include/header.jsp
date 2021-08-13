@@ -14,17 +14,30 @@
 		<li><a href='list.st' class='${category eq "st" ? "active" : ""}'>Style</a></li>
 		<li><a href='list.qa' class='${category eq "qa" ? "active" : ""}'>QnA</a></li>
 		<li><a href='list.no' class='${category eq "no" ? "active" : ""}'>Notice</a></li>
-		<li><a href='list.mp' class="${category eq 'mp' ? 'active' : ''}">My Page</a></li>
+<%-- 		<li><a href='list.mp' class="${category eq 'mp' ? 'active' : ''}">My Page</a></li>
 		<li><a href='list.lg' class="${category eq 'lg' ? 'active' : ''}">Login</a></li>
-		<li><a href='list.ou' class="${category eq 'ou' ? 'active' : ''}">Logout</a></li>
+		<li><a href='list.ou' class="${category eq 'ou' ? 'active' : ''}">Logout</a></li> --%>
+		<!-- 로그인하지 않은 상태 -->
+		<c:if test="${empty loginInfo}">
+		<li><a href='list.lg' class="${category eq 'lg' ? 'active' : ''}">Login</a></li>
+			
+		</c:if>
+		<!-- 로그인한 상태 -->
+		<c:if test="${!empty loginInfo}">
+		<li>
+		<a href='list.mp' class="${category eq 'mp' ? 'active' : ''}">My Page</a>
+		</li>
+		<li>
+			<strong>${loginInfo.name}</strong> 님 <a href='list.ou' class="${category eq 'ou' ? 'active' : ''}">Logout</a>
+		</li>
+		</c:if>
 	</ul>
 	</div>
-	
 	
 </header>    
 <style>
 	#logo{margin: 30px;}
-	header ul, header ul li { margin:0; padding:0; display:inline; }
+	header ul, header ul li { margin:0 auto; padding:0; display:inline; }
 	header .category { font-size:18px;}
 	header .category ul li:not(:first-child){ padding-left:30px;}
 	header .category ul li a{

@@ -10,50 +10,15 @@
 </head>
 <body>
 	<form method="post" action='list.lg'>
-			<div class="member_form">
-				<h3 class="login">LOGIN</h3>
-				<ul>
-					<li><input type="text" placeholder=" 아이디"></li>
-					<li><input type="password" placeholder=" 비밀번호" onkeypress="if( event.keyCode==13 ) go_login()"></li>
-					<li><input type="checkbox" id="save_id" checked value="save">
-						<label for="save_id">아이디 저장</label></li>
-					<li><input type="button" value="로그인" id="loginBtn" onclick="go_login()"></li>
-					<li><a href='member'><input type="button" value="회원가입" id="joinBtn"></a></li>
-				</ul>
-			</div>
+	<input type='hidden' name='curPage' value='1'/>
+	<div id='list-top'>
+	<a href=""><img src="imgs/Login.png"/></a>
+	</div>
+	<div>
+	<a href="login.ml"><img src="imgs/loginbtn1.png"/></a>
+	<a href="login.el"><img src="imgs/loginbtn2.png"/></a>
+	</div>
 	</form>
-	<script type="text/javascript">
-		function go_login() {
-			if ($('#userid').val() == '') {
-				alert('아이디를 입력하세요!');
-				$('#userid').focus();
-				return;
-			} else if ($('#userpw').val() == '') {
-				alert('비밀번호를 입력하세요!');
-				$('#userpw').focus();
-				return;
-			}
-
-			$.ajax({
-				url : 'webLogin',
-				data : {
-					id : $('#userid').val(),
-					pw : $('#userpw').val()
-				},
-				success : function(response) {
-					if (response) {
-						location = '<c:url value="/"/>';
-					} else {
-						alert('아이디나 비밀번호가 일치하지 않습니다!');
-					}
-
-				},
-				error : function(req, text) {
-					alert(text + ':' + req.status);
-				}
-			});
-		}
-	</script>
 </body>
 </html>
 
