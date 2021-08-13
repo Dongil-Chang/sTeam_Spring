@@ -1,0 +1,13 @@
+// 처음에 올릴때
+target/
+
+
+// 나중에 ignore 파일에 추가 수정후
+.settings/
+src/test/
+.classpath
+.project
+.springBeans
+
+/Servers/
+/.metadata/

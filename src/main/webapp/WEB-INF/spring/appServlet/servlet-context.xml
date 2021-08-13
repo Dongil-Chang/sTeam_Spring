@@ -35,7 +35,7 @@
 	</beans:bean>
 	
 	
-	<context:component-scan base-package="com.hanul.web" />
+	<context:component-scan base-package="com.hanul.web, com.hanu.steam" />
 	
 	
 	
