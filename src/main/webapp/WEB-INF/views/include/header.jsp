@@ -10,6 +10,10 @@
 	</div>
 	<br/>
 	<ul>
+		<!-- 관리자로 로그인된 경우만 회원관리 페이지에 접근 가능하도록 할 예정 -->
+		<li><a href='list.cu' class='${category eq "cu" ? "active" : ""}'>회원관리</a></li>
+		<!-- 관리자로 로그인된 경우만 회원관리 페이지에 접근 가능하도록 할 예정 -->
+		
 		<li><a href='list.re' class='${category eq "re" ? "active" : ""}'>Review</a></li>
 		<li><a href='list.st' class='${category eq "st" ? "active" : ""}'>Style</a></li>
 		<li><a href='list.qa' class='${category eq "qa" ? "active" : ""}'>QnA</a></li>
