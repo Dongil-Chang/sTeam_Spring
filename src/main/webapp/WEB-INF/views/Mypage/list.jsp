@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
 <!DOCTYPE html>
 <html>
@@ -10,53 +9,32 @@
 </head>
 <body>
 <form method="post" action='list.mp'>
-	<input type='hidden' name='curPage' value='1'/>
 <div id='list-top'>
 <a href=""><img src="imgs/MyPage.png"/></a>
 </div>
 </form>
+			<!-- 관리자로 로그인된 경우만 글쓰기 가능 -->
 <div class='btn_set dataOption'>
-	<a>회원정보수정</a>
-	<a>내가 쓴 글</a>
+		<a>내가 쓴 글</a>
+		<a href="detail.mp">회원정보</a>
+		<a onclick="if( confirm('가지마... 내가 잘 할게...')) { href='delete.mp' }">회원탈퇴</a>
 </div>
-<table class='tb_list'>
-<thead><tr><th class='w-px70'>번호</th><th>제목</th>
-			<th class='w-px100'>작성자</th>
-			<th class='w-px100'>작성일자</th>
-			<th class='w-px80'>첨부파일</th>
-		</tr>
-</thead>
-<tbody>
-	<c:if test="${empty page.list}">
-	<tr><td colspan='6'>게시글 정보가 없습니다.</td></tr>
-	</c:if>
-	<c:forEach items="${page.list}" var="vo">
-	<tr>
-		<td>${vo.no}</td>
-		<td class='left'>
-			<c:forEach begin="1" end="${vo.indent}" var="i">
-				${i eq vo.indent ? "<img src='imgs/re.gif'/>" : "&nbsp;&nbsp;"}
-			</c:forEach>
-			<a href='detail.no?id=${vo.id}'>${vo.title}</a></td>
-		<td>${vo.name}</td>
-		<td>${vo.writedate}</td>
-		<td>${empty vo.filename ? '' : '<img src="imgs/attach.png" class="file-img" />'}</td>
-	</tr>
-	</c:forEach>
-</tbody>
-</table>
 
-<div class='btnSet'>
-<jsp:include page="/WEB-INF/views/include/page.jsp"/>
+<div>
+<ul>
+
+<li><a href="mrlist.mp?id=${loginInfo.id }"><img alt="" src="imgs/myReviewList.png"></a></li>
+<li><a href="mclist.mp?id=${loginInfo.id }" ><img alt="" src="imgs/myCommunityList.png"></a></li>
+<li><a href="mqlist.mp?id=${loginInfo.id }"><img alt="" src="imgs/myQnaList.png"></a></li>
+</ul>
 </div>
+
 <script type="text/javascript">
 $('.dataOption a').click(function(){
 	$('.dataOption a').removeClass();
 	$(this).addClass('btn-fill');
 	var idx = $(this).index();
 	$('.dataOption a:not(:eq('+ idx +'))').addClass('btn-empty');
-	if( idx==0 ) pharmacy_list(1);
-	else if( idx==1 ) animal_list();
 	
 });
 
@@ -64,6 +42,17 @@ $(function(){
 	$('.dataOption a:eq(0)').trigger('click'); //클릭이벤트 강제 발생 시키기
 	
 });
+
+/* function go_info(loginInfo){
+	var pw = prompt("회원정보를 확인하려면 비밀번호를 입력하세요.", "");
+	
+	if(pw == loginInfo.pw){
+		location.href="detail.mp";
+	}else{
+		alert("비밀번호가 일치하지 않습니다!");
+	}
+	
+	} */
 </script>
 </body>
 </html>

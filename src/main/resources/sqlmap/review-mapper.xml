@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review.mapper">
+
+
+	<delete id="reply_delete">
+		delete from review_reply
+		where rp_id = #{rp_id}
+	</delete>
+
+
+
+
+
+	<update id="reply_update">
+		update review_reply  
+		set rp_content = #{rp_content}
+		where rp_id = #{rp_id}
+	</update>
+
+	
+	
+	
+	<select id="reply_list" resultType="review.ReviewReplyVO">
+		select r.*, (select name from member where member.id=r.rp_writer) name
+		from review_reply r
+		where rp_pid = #{rp_pid}
+		order by rp_id desc
+	</select>
+
+
+
+
+	<insert id="reply_insert">
+		insert into review_reply(rp_content, rp_writer, rp_pid)
+		values (#{rp_content}, #{rp_writer}, #{rp_pid})
+	</insert>
+
+
+
+
+	<sql id="category_search">
+		<if test="search != null and search != '' and  search !='all'">
+			where rv_type  =  #{search}
+		</if> 
+	</sql>
+	
+	
+	
+	
+	<sql id="search_writer">
+		writer in (select id from member where name like '%' || #{keyword} || '%')
+	</sql>
+	
+	
+	
+	
+	<update id="review_update">
+		update review set rv_title = #{rv_title}, rv_content = #{rv_content}
+				, rv_filename = #{rv_filename, jdbcType=VARCHAR}
+				, rv_filepath = #{rv_filepath, jdbcType=VARCHAR}
+				where rv_id = #{rv_id}
+	</update>
+	
+	
+	
+	
+	<delete id="delete">
+		delete from review 
+		where rv_id = #{rv_id}
+	</delete>
+
+
+
+
+	<update id="update">
+		update review
+		set rv_readcnt = rv_readcnt+1
+		where rv_id = #{rv_id}
+	</update>
+
+
+
+
+	<select id="detail" resultType="review.ReviewVO">
+		select review.*, (select name from member where member.id = review.rv_writer) name 
+		from review 
+		where rv_id = #{rv_id}
+	</select>
+
+
+
+
+	<select id="totalList" resultType="integer">
+		select count(*) 
+		from review <include refid="category_search"/>
+	</select>
+	
+	
+	
+	
+	<select id="list" resultType="review.ReviewVO">
+		select case rv_type when 'etc' then '일반' when 'manhair' then '남성헤어' when 'womenhair' then '여성헤어' when 'style' then '스타일링'  end rv_type, r.*
+		from (select rownum rv_no, r.*, (select name from member where member.id=r.rv_writer) name 
+				, (select name from tbl_shop where tel=r.shop_tel) shop_name
+			from (select * from review <include refid="category_search"/>
+				  order by rv_id) r
+			order by rv_no desc) r
+		where rv_no between #{beginList} and #{endList}
+	</select>
+	
+	
+	
+	
+	<insert id="insert">
+		insert into review (rv_title, rv_content, rv_writer, rv_filename, rv_filepath, rv_type, shop_tel)
+		values(#{rv_title}, #{rv_content}, #{rv_writer}, #{rv_filename, jdbcType=VARCHAR}, #{rv_filepath, jdbcType=VARCHAR}, #{rv_type}, #{shop_tel})
+	</insert>
+	
+	
+	
+	
+	<select id="shopName" resultType="review.ReviewVO">
+		select name shop_name, tel shop_tel from tbl_shop where tel = #{data}
+	</select>
+	
+	
+	
+	
+	
+	<select id="shop_list" resultType="review.ShopVO">
+	select *
+	from tbl_shop
+	</select>
+	
+	
+	
+	<select id="mr_totalList" resultType="integer">
+	select count(*) from review
+	where rv_writer = #{id}
+	</select>
+	
+	
+	<select id="mr_list" resultType="review.ReviewVO">
+	select * 
+	from (select rownum no, r.*, (select name from member where member.id=rv_writer) name
+		  from (select * from review where rv_writer = #{id}
+		  	    order by rv_id) r		  	  
+		  order by no desc) r
+	where no between #{r_page.beginList} and #{r_page.endList}	
+	</select>
+		
+	
+	
+	<!-- 메인 화면에서 사용할 쿼리 -->	
+<select id="main_list" resultType="review.ReviewVO">
+	select To_Char(rv_writedate, 'yyyy-mm-dd') rv_writedate, n.*
+	from (select* from review order by rv_writedate desc) n
+	where rownum <![CDATA[ <= ]]> 5
+</select>	
+	
+	
+	
+	
+</mapper>
