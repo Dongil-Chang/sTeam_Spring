@@ -75,7 +75,18 @@ public class BoardServiceImpl implements BoardService {
 		
 		return dao.main_board_list();
 	}
+
 	
+	
+	
+	
+	
+	//=======================================안드로이드 ======================================
+	   
+    @Override
+    public List<BoardVO> commuList() {
+       return dao.commuList();
+    }
 	
 	
 	

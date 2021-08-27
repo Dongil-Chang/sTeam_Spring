@@ -84,6 +84,22 @@ public class BoardDAO implements BoardService {
 		
 		return sql.selectList("board.mapper.main_list");
 	}
+
+	
+	
+	
+	
+	
+	//================================= 안드로이드 ==================================
+    @Override
+    public List<BoardVO> commuList() {
+       return sql.selectList("board.mapper.commuList");
+    }
+	
+	
+	
+	
+	
 	
 
 }

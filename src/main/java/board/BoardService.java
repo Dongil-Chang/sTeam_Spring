@@ -23,4 +23,13 @@ public interface BoardService {
 	// 메인 화면에 사용할 서비스
 	List<BoardVO> main_board_list();
 	
+	
+	
+	
+	//============================= 안드로이드 ====================
+	   
+	List<BoardVO> commuList();
+	
+	
+	
 }
