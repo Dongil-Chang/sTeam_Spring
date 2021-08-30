@@ -38,11 +38,11 @@ a.btn-empty { margin: 10px; }
 
 table.tb_list tr { height: 60px; }
 
-#list-top { width: 81%; }
+#list-top { width: 70%; }
 
 .box ul:first-child { height: 20px; }
 
-.box ul li:last-child { height: 40px; margin-right: 10px;  }
+.box ul li:last-child { height: 40px;   }
 
 
 
@@ -64,7 +64,7 @@ table.tb_list tr { height: 60px; }
 <input type="hidden" name="name" value="${name }" />
 
 <div class="box">
-	<ul>
+	<ul style="margin-left: 190px;">
 		<li>
 			<select name='search' class='w-px90'>
 			<option value='all' ${CoPage.search eq 'all' ? 'selected' : ''}>전체</option>

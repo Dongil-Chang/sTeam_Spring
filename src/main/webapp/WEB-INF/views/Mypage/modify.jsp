@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@ table tr td {
 }
 
 .ui-datepicker table tr {
-	height: inherit;
+	height:inherit;
 }
 
 .valid, .invalid {
@@ -33,6 +34,8 @@ table tr td {
 	color: red;
 }
 </style>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
 	<h3>[ ${vo.name} ] 님 회원정보수정</h3>
@@ -51,8 +54,8 @@ table tr td {
 				</tr>
 				<tr>
 					<th>비밀번호</th>
-					<td><input type='password' name='pw' class='chk' value="${vo.pw}"/><br>
-						<div class='valid'>비밀번호를 입력하세요(영문 대/소문자,숫자를 모두 포함)</div></td>
+					<td><input type='password' name='pw' class='chk' /><br>
+						<div class='valid'>변경하실 비밀번호를 입력하세요(영문 대/소문자,숫자를 모두 포함)</div></td>
 				</tr>
 				<tr>
 					<th>비밀번호확인</th>
@@ -65,21 +68,20 @@ table tr td {
 				</tr>
 				<tr>
 					<th> 이메일</th>
-						
-					<td><input type='text' name='email' class='chk' value="  ${vo.email}"/><br>
-						<div class='valid'>이메일을 입력하세요</div></td>
+					<td><input type='text' name='email' value="${vo.email}"/><br><!--  class='chk' -->
+						<!-- <div class='valid'>이메일을 입력하세요</div></td> -->
 				</tr>
 				<tr>
 					<th>생년월일</th>
-					<td><input type='text' name='birth' readonly value="${vo.birth }"/> <a
-						id='delete'><i class="font-img fas fa-times"></i></a></td>
+					<td><input type='text' name='birth' readonly value='${vo.birth}' /> <a id='delete'><i
+						class="font-img fas fa-times"></i></a></td>
 				</tr>
 				<tr>
 					<th>전화번호</th>
-					<td><input type='text' name='tel' class='w-px100'
-						maxlength="3" /> - <input type='text' name='tel' class='w-px100'
-						maxlength="4" /> - <input type='text' name='tel' class='w-px100'
-						maxlength="4" /></td>
+					<td> <input type='text' name='tel' class='w-px100' value='${fn:split(vo.tel,"-")[0]}'
+						maxlength="3" /> - <input type='text' name='tel' class='w-px100' value='${fn:split(vo.tel,"-")[1]}'
+						maxlength="4" /> - <input type='text' name='tel' class='w-px100' value='${fn:split(vo.tel,"-")[2]}'
+						maxlength="4" /> </td>
 				</tr>
 				<tr>
 					<th>주소</th>
@@ -89,15 +91,15 @@ table tr td {
 
 					<c:if test="${vo.addr ne null}">
 					<td class='addr'><a class='btn-fill-s' onclick='daum_post()'>우편번호찾기</a>
-						<input type='text' name='post' class='w-px60' readonly/><br>
+						<input type='text' name='post' class='w-px60' readonly value="${vo.post}"/><br>
 						<input type='text' name='addr' readonly  value=" ${vo.addr}"/> <input type='text'
 						name='addr' /></td>
 					</c:if>			
 				</tr>
 			</tbody>
-			<tr class='btnSet'>
+			<tr class='btnSet' style="text-align: center;">
 				<td colspan="2"><a class='btn-fill'
-					onclick='$("form").submit()'>저장</a> <!-- 		<a class='btn-fill' href='javascript:$("form").submit()'>저장</a> -->
+					onclick='fn_submit()'>저장</a> <!-- 		<a class='btn-fill' href='javascript:$("form").submit()'>저장</a> -->
 					<a class='btn-empty' href='list.mp?id=${vo.id}'>취소</a></td>
 			</tr>
 		</table>
@@ -107,19 +109,37 @@ table tr td {
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript">
-		function go_join() {
-
-			if (!item_check($('[name=pw]')))
+	function fn_submit(){
+		
+		if( $('[name=pw]').val()!='' || $('[name=pw_ck]').val()!=''){
+			if(  $('[name=pw]').val()=='' ){
+				alert('비밀번호 먼저 입력하세요!');
+				$('[name=pw_ck]').val('');
+				$('[name=pw]').focus();
 				return;
-			if (!item_check($('[name=pw_ck]')))
-				return;
-			if (!item_check($('[name=email]')))
-				return;
-
-			$('form').submit();
+			}
+			if (!item_check($('[name=pw]'))) return;
+			
+			if (!item_check($('[name=pw_ck]')))	return;
+			
 		}
+		if (!item_check($('[name=email]'))) return;
 
-		$(function() {
+		
+		$("form").submit();
+	}
+
+	function item_check(item) {
+		var data = join.tag_status(item);
+		if (data.code == 'invalid') {
+			alert('회원정보 수정 불가!\n' + data.desc);
+			item.focus();
+			return false;
+		} else
+			return true;
+	}
+
+   $(function() {
 			var today = new Date();
 			var endDay = new Date(today.getFullYear() - 13, today.getMonth(),
 					today.getDate() - 1);
@@ -138,42 +158,7 @@ table tr td {
 						maxDate : endDay
 					});
 		});
-
-		$('#btn-id').on('click', function() {
-			id_check();
-		});
-		function id_check() {
-			var $id = $('[name=id]');
-			if ($id.hasClass('checked'))
-				return;
-			var data = join.tag_status($id);
-			if (data.code == 'invalid') {
-				alert('아이디 중복확인 불필요\n' + data.desc);
-				$id.focus();
-				return;
-			}
-
-			//DB에 해당 아이디로 가입한 회원이 있는지의 여부를 판단
-			$.ajax({
-				url : 'id_check',
-				data : {
-					id : $id.val()
-				},
-				success : function(response) {
-					var data = join.id_usable(response);
-					$id.siblings('div').text(data.desc).removeClass().addClass(
-							data.code);
-					$id.addClass('checked');
-
-				},
-				error : function(req, text) {
-					alert(text + ':' + req.status);
-				}
-			});
-
-		}
-
-		$('.chk').on(
+	 	$('.chk').on(
 				'keyup',
 				function(e) {
 					if ($(this).attr('name') == 'id') {
@@ -186,16 +171,7 @@ table tr td {
 					$(this).siblings('div').text(data.desc).removeClass()
 							.addClass(data.code);
 				});
-
-		$('[name=birth]').change(function() {
-			$('#delete').css('display', 'inline');
-		});
-		$('#delete').click(function() {
-			$('[name=birth]').val('');
-			$('#delete').css('display', 'none');
-		});
-
-		function after(date) {
+	function after(date) {
 			if (date > new Date())
 				return [ false ];
 			else

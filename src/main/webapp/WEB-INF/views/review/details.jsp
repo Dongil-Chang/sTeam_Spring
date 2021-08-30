@@ -24,6 +24,7 @@
 	margin: 0 auto;
 	/* padding-top: 20px; */
 	width: 500px;
+	margin-top: 70px;
 }
 
 #reply-regist {

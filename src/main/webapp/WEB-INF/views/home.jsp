@@ -9,7 +9,7 @@
 
 <style type="text/css">
 
-#event { border-top:1px solid #ddd; border-bottom:1px solid #ddd;  margin-top: 30px; }
+#event { border-top:1px solid #ddd; border-bottom:1px solid #ddd;  margin-top: 50px; }
 
 .event-wrap { width:80%; margin:0 auto; overflow: hidden; clear: both; }
 
@@ -30,6 +30,7 @@
 .youtube iframe { border: 3px solid #8338ec; }
 
 #main-notice, #main-commu, #main-review { display: inline-block; }
+
 
 </style>
 
@@ -89,6 +90,7 @@ $(document).ready(function(){
 	mainNotice();
 	mainCommumity();
 	mainReview();
+	
 	
 	
 });

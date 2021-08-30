@@ -17,10 +17,14 @@ tr, th, td {
 	position: absolute; left: 0; top: 420px; width: 100%; height: 100%;
 	background-color: #000; opacity: 0.3; display: none; }
 
-.comment {  margin:0 auto; width:500px; }
+.comment {  margin:0 auto; width:500px; margin-top: 70px; }
 #comment_regist { width:100%; }
 #comment_regist span{ width:50%; float:left; }
 textarea#comment { width:96%; height:60px; margin-top:5px; resize:none } 
+
+
+
+
 </style>
 </head>
 <body>
@@ -90,7 +94,7 @@ textarea#comment { width:96%; height:60px; margin-top:5px; resize:none }
 <div class='comment'>
 	<div id='comment_regist'>
 		<span class='left'><strong>댓글작성</strong></span>
-		<span class='right'><a class='btn-fill-s' onclick="comment_regist()">댓글등록</a></span>
+		<span class='right'><a class='btn-fill-s' onclick="comment_regist()" >댓글등록</a></span>
 		<textarea id='comment'></textarea>
 	</div>
 	<div id='comment_list'></div>

@@ -37,11 +37,11 @@ a.btn-empty { margin: 10px; }
 
 table.tb_list tr { height: 60px; }
 
-#list-top { width: 81%; }
+#list-top { width: 70%; }
 
 .box ul:first-child { height: 20px; }
 
-.box ul li:last-child { height: 40px; margin-right: 10px;  }
+.box ul li:last-child { height: 40px; }
 
 
 
@@ -65,7 +65,7 @@ table.tb_list tr { height: 60px; }
 					</c:forEach>
 				</select> --%>
 	<div class="box">
-		<ul>				
+		<ul style="margin-left: 190px;">				
 			<li>				<!-- onchange="$('form').submit()" -->
 				<select name="search" class="w-px120"  id="hair_category" >
 					<option value="all" ${RePage.search eq 'all' ? 'selected' : '' }>전체</option>
@@ -111,7 +111,12 @@ table.tb_list tr { height: 60px; }
 			<c:forEach items="${RePage.list }" var="vo">
 				<li>
 					<div><a onclick='go_detail(${vo.rv_id}, "${u_id }", "${RePage.curPage }", "${RePage.search }", "${RePage.keyword }", "${name }")'>${vo.rv_title }</a></div>
+					<c:if test="${!empty vo.shop_name }">
 					<div>${vo.name }   /   ${vo.shop_name}</div> 
+					</c:if>
+					<c:if test="${empty vo.shop_name }">
+					<div>${vo.name }   /   일반후기</div> 
+					</c:if>
 					<div>${vo.rv_writedate }[${vo.rv_readcnt }] <span style="float:right;">${empty vo.rv_filename ? '' : "<img src='imgs/attach.png' class='file-img'/>"} </span></div>
 				</li>
 			</c:forEach>
@@ -145,7 +150,14 @@ table.tb_list tr { height: 60px; }
 					<tr class="item">
 						<td>${vo.rv_no }</td>
 						<td>${vo.rv_type }</td>
-						<td>${vo.shop_name}</td>		
+						<!-- 21-08-30 출력 형식 수정하였습니다. -->
+	                     <c:if test="${!empty vo.shop_name }">
+	                     <td>${vo.shop_name}</td>                     
+	                     </c:if>
+	                     <c:if test="${empty vo.shop_name }">
+	                     <td>일반후기</td>                     
+	                     </c:if>
+                     	<!-- 21-08-30 출력 형식 수정하였습니다. -->
 						<td class='left'><a onclick='go_detail(${vo.rv_id}, "${u_id }", "${RePage.curPage }", "${RePage.search }", "${RePage.keyword }", "${name }")'>${vo.rv_title }</a></td>					
 						<td>${vo.name }</td>
 						<td>${vo.rv_writedate }</td>

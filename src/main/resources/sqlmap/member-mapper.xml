@@ -19,7 +19,8 @@
 </select>
 
 <update id="member_update">
-	update member set pw = #{pw}, birth = #{birth}, email= #{email}, tel= #{tel}, addr= #{addr}
+	
+	update member set <if test="pw !='' ">pw = #{pw},</if> birth = #{birth}, email= #{email}, tel= #{tel}, addr= #{addr}
 	where id = #{id}
 </update>
 
@@ -38,7 +39,7 @@
 </select>
 
 <select id="detail" resultType="member.MemberVO">
-	select m.*, case when  naver is not null then naver 
+	select to_char(birth,'yyyy-mm-dd') birth, m.*, case when  naver is not null then naver 
 					 when kakao is not null then kakao else null end  social_email   
 	from member m where id = #{id}
 </select>

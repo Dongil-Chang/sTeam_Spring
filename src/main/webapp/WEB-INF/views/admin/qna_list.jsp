@@ -39,7 +39,7 @@ a.btn-empty { margin: 10px; }
 
 table.tb_list tr { height: 60px; }
 
-#list-top { width: 81%; }
+#list-top { width: 70%; margin-left: 5px; }
 
 .box ul:first-child { height: 20px; }
 
@@ -58,7 +58,7 @@ table.tb_list tr { height: 60px; }
 <input type="hidden" name="id" value="${id}"/>
 <div id="list-top"> 
 	<div class="box">
-		<ul>
+		<ul style="margin-left: 185px;">
 			<li>
 				<select name="search" class="w-px90">
 					<option value="all" ${QnaPage.search eq 'all' ? 'selected' : '' }>제목 + 내용</option>
