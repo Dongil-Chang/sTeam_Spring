@@ -61,7 +61,7 @@ public class HomeController {
 	
 	@RequestMapping("/mainReview.ad")
 	public String mainReview(Model model) {
-		
+		// git test
 		model.addAttribute("curPage", 1);	
 		model.addAttribute("ad_list", r_service.main_review_list());
 		return "review/home/recently";
