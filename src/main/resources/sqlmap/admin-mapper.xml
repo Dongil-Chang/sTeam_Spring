@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin.mapper">
+
+
+
+
+<select id="search_list" resultType="member.MemberVO">
+	select *
+	from member
+	<!-- where admin != 'Y' -->
+	<include refid="member_search" />
+	order by admin desc
+</select>
+
+
+<select id="page_list" resultType="member.MemberVO">
+	select To_Char(birth, 'yyyy-mm-dd') birth, n.* 
+	from (select rownum no, n.* 
+          from (select * 
+          		from member
+                <include refid="member_search"/> ) n
+          order by no desc) n
+	where no between #{beginList} and #{endList}
+	order by admin desc
+</select>
+
+
+<select id="qna_list" resultType="admin.QnaVO" >
+	select * 
+	from (select rownum no, q.*, (select name from member where member.id = q_writer) q_name  
+		  from (select * from tbl_qna <include refid="qna_search"/> 
+		  	    order by q_root, q_step desc) q
+		  order by no desc) 
+	where no between #{q_page.beginList} and #{q_page.endList}
+	
+</select>
+
+
+<select id="c_list" resultType="board.BoardVO">
+	select * 
+	from (select rownum no, b.*, (select name from member where member.id=b.writer) name
+		  from (select * from board <include refid="c_search"/>
+		  	    order by id) b		  
+		  order by no desc) b
+	where no between #{b_page.beginList} and #{b_page.endList}
+</select>
+
+
+
+<select id="r_list" resultType="review.ReviewVO">
+	select case rv_type when 'etc' then '일반' when 'manhair' then '남성헤어' when 'womenhair' then '여성헤어' when 'style' then '스타일링'  end rv_type, To_Char(rv_writedate, 'yyyy-mm-dd') rv_writedate, r.*
+	from (select rownum rv_no, r.*, (select name from member where member.id=r.rv_writer) name 
+			, (select name from tbl_shop where tel=r.shop_tel) shop_name
+		from (select * from review <include refid="a_category_search"/>
+			  order by rv_id) r
+		order by rv_no desc) r
+	where rv_no between #{r_page.beginList} and #{r_page.endList}
+</select>
+
+
+
+
+
+<select id="s_list" resultType="style.StyleVO">
+	select * 
+	from (select rownum no, s.*, (select name from member where member.id=s.writer) name
+		  from (select * from style <include refid="s_search"/>
+		  	    order by id) s		  
+		  order by no desc) s
+	where no between #{s_page.beginList} and #{s_page.endList}
+</select>
+
+
+
+
+
+<sql id="member_search">
+<!-- 제목에 테스트 문자가 있다고 가정하면 -->	
+<!-- where title like '%테스트%' -->
+	
+	<!-- 회원정보 검색 -->
+	<if test="search == 'name' ">
+		where ${search} like '%'||#{keyword}||'%'
+	</if>
+	
+	<if test="search == 'tel'">
+		where ${search} like '%'||#{keyword}||'%' 
+	</if>
+	
+	<if test="search == 'addr'">
+		where ${search} like '%'||#{keyword}||'%' 
+	</if>
+	
+	<if test="search == 'all'">
+		where admin like '%'||#{keyword}||'%'
+		or name like '%'||#{keyword}||'%'
+		or gender like '%'||#{keyword}||'%'
+		or birth like '%'||#{keyword}||'%'
+		or addr like '%'||#{keyword}||'%'
+		or tel like '%'||#{keyword}||'%'
+		or email like '%'||#{keyword}||'%'
+	</if>
+	
+</sql>
+	
+	
+	
+<sql id="qna_search">
+	
+	 where q_writer = #{id} 
+	
+	<!-- 특정 회원 QnA 글 검색 -->
+	<if test="q_page.search == 'q_title' or q_page.search == 'q_content' ">
+		and ${q_page.search} like '%'||#{q_page.keyword}||'%'
+	</if>
+	
+		
+	<if test="q_page.search == 'all'">
+		and ( q_title like '%'||#{q_page.keyword}||'%' or q_content like '%'||#{q_page.keyword}||'%' )
+	</if>
+	
+	
+</sql>
+	
+
+
+<sql id="c_search">
+
+	where writer = #{id} 
+
+	<!-- 특정 회원 Community 글 검색 -->
+	<if test=" b_page.search == 'title' or b_page.search == 'content' ">
+		and ${b_page.search} like '%' || #{b_page.keyword} || '%'
+	</if>
+	
+	<if test=" b_page.search == 'writer' ">
+		and <include refid="search_writer"/> 
+	</if>
+	
+	<if test=" b_page.search == 'all' ">
+		and ( title like '%' || #{b_page.keyword} || '%'
+		or content like '%' || #{b_page.keyword} || '%'
+		or <include refid="search_writer"/> ) 
+		<!-- writer in (select id from member where name like '%' || #{keyword} || '%') -->
+	</if>
+</sql>
+
+
+
+<sql id="search_writer">
+	writer in (select id from member where name like '%' || #{b_page.keyword} || '%')
+</sql>
+
+
+<sql id="s_search_writer">
+	writer in (select id from member where name like '%' || #{s_page.keyword} || '%')
+</sql>
+
+
+
+
+<sql id="a_category_search">
+	
+	where rv_writer = #{id} 
+
+	<!-- 특정 회원 리뷰 글 검색 -->
+	<if test=" r_page.search == 'rv_title' or r_page.search == 'rv_content' ">
+		and ${r_page.search} like '%' || #{r_page.keyword} || '%'
+	</if>
+	
+	
+	
+	
+	<if test="r_page.search == 'rv_type'">
+		<if test="( r_page.keyword eq '여'.toString() ) or r_page.keyword.equals('여성헤어') or r_page.keyword.equals('여성') ">
+			and rv_type = 'womenhair'
+		</if>
+		<if test="( r_page.keyword eq '남'.toString() ) or r_page.keyword.equals('남성헤어') or r_page.keyword.equals('남성')  ">
+			and rv_type = 'manhair'
+		</if>
+		<if test="r_page.keyword.equals('스타일링') or r_page.keyword.equals('스타')  or r_page.keyword.equals('스타일')  or r_page.keyword.equals('타일') or ( r_page.keyword eq '스'.toString() ) ">
+			and rv_type = 'style'
+		</if>
+		<if test="r_page.keyword.equals('일반') or ( r_page.keyword eq '일'.toString() ) ">
+			and rv_type = 'etc'
+		</if>
+	</if>
+	
+	
+	
+	
+	<!-- <if test="r_page.search == 'rv_type'">
+		<if test="r_page.keyword.equals('여성헤어') or r_page.keyword.equals('여성')  ">
+			and rv_type = 'womenhair'
+		</if>
+		<if test="r_page.keyword.equals('남성헤어') or r_page.keyword.equals('남성')  ">
+			and rv_type = 'manhair'
+		</if>
+		<if test="r_page.keyword.equals('스타일링') or r_page.keyword.equals('스타')  or r_page.keyword.equals('스타일')  or r_page.keyword.equals('타일') ">
+			and rv_type = 'style'
+		</if>
+		<if test="r_page.keyword.equals('일반')  ">
+			and rv_type = 'etc'
+		</if>
+	</if> -->
+		
+		
+	<if test=" r_page.search == 'all' ">
+		and ( rv_title like '%'||#{r_page.keyword}||'%' 
+			or rv_content like '%'||#{r_page.keyword}||'%'
+			or rv_type like '%'||#{r_page.keyword}||'%')
+	</if>
+	
+</sql>
+
+
+
+
+<sql id="s_search">
+	where writer = #{id} 
+
+	<if test=" s_page.search=='title' or s_page.search=='content' ">
+		and ${s_page.search} like '%' || #{s_page.keyword} || '%'
+	</if>
+	<if test=" s_page.search=='writer' ">
+		and <include refid="s_search_writer"/> 
+	</if>
+	
+	<if test=" s_page.search=='all' ">
+		and ( title like '%' || #{s_page.keyword} || '%'
+		or content like '%' || #{s_page.keyword} || '%'
+		or <include refid="s_search_writer"/> ) 
+		<!-- writer in (select id from member where name like '%' || #{keyword} || '%') -->
+	</if>
+</sql>
+
+
+
+
+
+<!-- <sql id="a_category_search">
+	
+	<if test="r_page.search == 'all'">
+		where rv_writer = #{id}
+		and ( rv_title like '%' || #{r_page.keyword} || '%'
+		or rv_content like '%' || #{r_page.keyword} || '%' )	
+	</if>
+	 
+	<if test="r_page.search != null and r_page.search != '' and  r_page.search !='all'">
+		where rv_writer = #{id} 
+		and rv_type  = #{r_page.search}
+	</if> 
+	
+</sql> -->
+
+
+
+
+<delete id="delete">
+	delete 
+	from member 
+	where id = #{id}
+</delete>
+
+
+
+<select id="admin" resultType="admin.AdminVO">
+	select distinct admin
+	from member
+	where admin != 'Y'
+</select>
+
+
+
+
+<select id="admin_list" resultType="member.MemberVO">
+	select * 
+	from member
+	where admin = #{admin}
+	order by name 
+</select>
+
+
+
+<!-- 회원목록 수 조회 -->
+<select id="totalList" resultType="integer">
+	select count(*) from member <include refid="member_search" />
+</select>
+
+
+<!-- 특정 회원 QnA 글 목록 수 -->
+<select id="q_totalList" resultType="integer" >
+	select count(*) from tbl_qna  <include refid="qna_search"/>  
+</select>
+
+<!-- 특정 회원 Community 글 목록 수 -->
+<select id="c_totalList" resultType="integer">
+	select count(*) from board <include refid="c_search"/>
+</select>
+
+
+<!-- 특정 회원 Review 글 목록 수 -->
+<select id="r_totalList" resultType="integer">
+	select count(*) 
+	from review <include refid="a_category_search"/>
+</select>
+
+
+
+<select id="s_totalList" resultType="integer">
+	select count(*)
+	from style
+	<include refid="s_search"/>
+</select>
+
+
+
+
+
+
+</mapper>

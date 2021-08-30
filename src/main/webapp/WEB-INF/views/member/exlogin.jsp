@@ -18,11 +18,15 @@
 				<ul>
 					<li><input type="text" id= "userid" placeholder=" 아이디"></li>
 					<li><input type="password" id="userpw" placeholder=" 비밀번호" onkeypress="if( event.keyCode==13 ) go_login()"></li>
-					<li><input type="checkbox" id="save_id" checked value="save">
-						<label for="save_id">아이디 저장</label></li>
-					<li><input type="button" value="로그인" id="loginBtn" onclick="go_login()"></li>
-					<li><a href='member'><input type="button" value="회원가입" id="joinBtn"></a></li>
+					<!-- <li><input type="checkbox" id="save_id" checked value="save">
+						<label for="save_id">아이디 저장</label></li> -->
+					<!-- <li><input type="button" value="로그인" id="loginBtn" onclick="go_login()"></li>
+					<li><a href='exmember'><input type="button" value="회원가입" id="joinBtn"></a></li> -->
 				</ul>
+				<div >
+					<a onclick="go_login()"><img alt="" src="imgs/loginbtn.png"/> </a>
+					<a href='exmember' > <img alt="" src="imgs/joinbtn.png"/> </a>
+				</div>
 			</div>
 	</form>
 	<script type="text/javascript">

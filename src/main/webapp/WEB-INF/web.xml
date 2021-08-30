@@ -51,4 +51,32 @@
 		<session-timeout>120</session-timeout>
 	</session-config>
 
+
+
+
+	<!-- index.html 경로상 잘못된 경로를 적어 에러가 생겼을 경우 ErrorController /error로 연결하여 표현  -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>400</error-code>
+		<location>/error</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>406</error-code>
+		<location>/error</location>
+	</error-page>
+
+
+
+
+
 </web-app>

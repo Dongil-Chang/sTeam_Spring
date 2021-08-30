@@ -17,6 +17,7 @@
 	<resources location="/resources/upload/" mapping="/upload/**"/>
 	<resources location="/resources/css/" mapping="/css/**"/>
 	<resources location="/resources/images/" mapping="/imgs/**"/>
+	<resources location="/resources/json/" mapping="/json/**"/>
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
@@ -35,7 +36,7 @@
 	</beans:bean>
 	
 	
-	<context:component-scan base-package="com.hanul.web" />
+	<context:component-scan base-package="com.hanul.web, android" />
 	
 	
 	

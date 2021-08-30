@@ -1,8 +1,41 @@
 package member;
 
+
+
 public class MemberVO {
+	private int no;		// 고객관리 페이지 row num 을 사용하기위해 선언
+	
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
+	
 	private String name, id, pw, addr, tel, gender, email, post, admin;
 	private String birth, social_email, social_type;
+	
+	
+	/* 안드로이드 ==========================================================================================*/
+	
+	public MemberVO (){};	//안드로이드 사용을 위한 기본생성자
+
+	//안드로이드 사용을 위한 생성자
+	public MemberVO(String name, String id, String pw, String addr, String tel, String gender, String email,
+			String post) {
+		super();
+		this.name = name;
+		this.id = id;
+		this.pw = pw;
+		this.addr = addr;
+		this.tel = tel;
+		this.gender = gender;
+		this.email = email;
+		this.post = post;
+	}
+	
+	/* 안드로이드 ==========================================================================================*/
+	
 	
 	public String getSocial_email() {
 		return social_email;

@@ -2,6 +2,8 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:choose>
+	<c:when test="${category eq 'hi'}"><c:set var='title' value='Hair Map'/></c:when>
+	<c:when test="${category eq 'cu'}"><c:set var='title' value='Admin Page'/></c:when>
 	<c:when test="${category eq 're'}"><c:set var='title' value='Review'/></c:when>
 	<c:when test="${category eq 'st'}"><c:set var='title' value='Style'/></c:when>
 	<c:when test="${category eq 'qa'}"><c:set var='title' value='QnA'/></c:when>
@@ -19,12 +21,13 @@
 <style type="text/css">
 #wrap { display:flex; flex-direction:column; height:100%; }
 </style>
-<link rel="icon" type="image/x-icon" href="imgs/global_logo.png">
+<link rel="icon" type="image/x-icon" href="imgs/global_logo1.png">
 <link rel="stylesheet" type="text/css" href="css/style.css?v=<%=new java.util.Date().getTime()%>" >
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script type="text/javascript" 
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 	<script type="text/javascript" src='js/slide.js'></script>
+	<script type="text/javascript" src='js/common.js'></script>
 </head>
 <body>
 <div id='wrap'>

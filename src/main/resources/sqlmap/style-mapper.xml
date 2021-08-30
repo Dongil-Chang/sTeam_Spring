@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="style.mapper">
+
+
+
+
+
+<update id="style_update">
+	update style set title = #{title}, content = #{content}
+			, filename = #{filename, jdbcType=VARCHAR}
+			, filepath = #{filepath, jdbcType=VARCHAR}
+	where id = #{id}
+</update>
+
+
+
+
+<insert id="insert">
+	insert into style (title, content, writer, filename, filepath, type)
+	values (#{title}, #{content}, #{writer}
+			, #{filename, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR}, #{type})
+</insert>
+
+
+
+<sql id="where_search">
+	<if test=" search=='title' or search=='content' ">
+		where ${search} like '%' || #{keyword} || '%'
+	</if>
+	<if test=" search=='writer' ">
+		where <include refid="search_writer"/> 
+	</if>
+	
+	<if test=" search=='all' ">
+		where title like '%' || #{keyword} || '%'
+		or content like '%' || #{keyword} || '%'
+		or <include refid="search_writer"/> 
+		<!-- writer in (select id from member where name like '%' || #{keyword} || '%') -->
+	</if>
+</sql>
+
+
+
+
+<sql id="search_writer">
+	writer in (select id from member where name like '%' || #{keyword} || '%')
+</sql>
+
+
+
+
+
+<select id="detail" resultType="style.StyleVO">
+	select style.*, (select name from member where member.id= style.writer) name 
+	from style where id = #{id}
+</select>
+
+
+
+
+
+<update id="update">
+	update style set readcnt = readcnt+1 where id = #{id}
+</update>
+
+
+
+
+
+<delete id="delete">
+	delete from style where id = #{id}
+</delete>
+
+
+
+
+
+<select id="totalList" resultType="integer">
+	select count(*) from style <include refid="where_search"/>
+</select>
+
+
+
+
+
+<select id="list" resultType="style.StyleVO">
+	select case type when 'hair_product' then '헤어제품' when 'hair_care' then '헤어케어' when 'w_style' then '여성스타일링' when 'm_style' then '남성스타일링'  end type, s.*
+	from (select rownum no, s.*, (select name from member where member.id=s.writer) name
+		  from (select * from style <include refid="where_search"/>
+		  	    order by id) s		  
+		  order by no desc) s
+	where no between #{beginList} and #{endList}
+</select>
+
+
+
+
+
+<select id="ms_totalList" resultType="integer">
+	select count(*) from style
+	where writer = #{id}
+</select>
+
+
+
+
+
+<select id="ms_list" resultType="style.StyleVO">
+	select * 
+	from (select rownum no, s.*, (select name from member where member.id=s.writer) name
+		  from (select * from style where writer = #{id}
+		  	    order by id) s		  
+		  order by no desc) s
+	where no between #{s_page.beginList} and #{s_page.endList}	
+</select>
+
+
+
+
+
+</mapper>
