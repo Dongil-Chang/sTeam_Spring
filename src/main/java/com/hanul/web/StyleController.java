@@ -145,6 +145,56 @@ public class StyleController {
 	
 	
 	
+	//수정처리요청
+	@RequestMapping("/update.st")
+	public String update(Model model, HttpSession session, StyleVO vo
+							, MultipartFile file
+							, String attach) {
+		StyleVO style = service.style_detail( vo.getId() ); 
+		String uuid = session.getServletContext().getRealPath("resources")
+						+ "/" + style.getFilepath(); //파일에 저장된경로를 가져옴
+		
+		//파일을 첨부하지 않은 경우
+		if( file.isEmpty() ) {
+			//원래부터 첨부된 파일이 없는 경우,
+			//원래 첨부된 파일이 있었는데 삭제한 경우
+			if( attach.isEmpty() ) {
+				//원래 첨부되어 있던 파일을 서버의 물리적영역에서 삭제
+				if( style.getFilename() != null ) {
+					File f = new File( uuid );
+					if( f.exists() ) f.delete();
+				}
+				
+			}else {
+				//원래 첨부된 파일을 그대로 사용하는 경우
+				vo.setFilename( style.getFilename() );
+				vo.setFilepath( style.getFilepath() );
+			}
+			
+		}else {
+		//파일을 첨부한 경우
+			vo.setFilename( file.getOriginalFilename() );
+			vo.setFilepath( common.fileUpload("style", file, session) );
+			
+			//원래 첨부되어 있는 파일이 있었다면 서버의 물리적영역에서 삭제
+			if( style.getFilename() != null ) {
+				File f = new File( uuid );
+				if( f.exists() ) f.delete();
+			}
+		}
+		//화면에서 수정한 정보들을 DB에서 저장한 상세화면 연결
+		service.style_update(vo);
+		
+		model.addAttribute("uri", "detail.st");
+		model.addAttribute("id", vo.getId());
+		return "Style/redirect";
+		
+		
+	}
+	
+	
+	
+	
 	
 	//글 수정화면 요청
 	@RequestMapping("/modify.st")

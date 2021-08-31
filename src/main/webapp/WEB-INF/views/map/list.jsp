@@ -45,10 +45,10 @@ select { border:1px solid #b0b0b0; padding: 0 5px; cursor:pointer; margin-bottom
 
 <div class="tb_list" >
 <h3><a href="javascript:history.back(-1)"><img alt="매장정보" src="imgs/shop.png"  /></a> </h3>   
-<div style="float: right;  font-weight: bold; color:#cc0073; padding: 10px 4%; margin-top: 20px; margin-right: 300px;">* 상호명을 클릭 후 지도가 띄워지고 주소를 클릭하면 후기 화면으로 이동합니다.
+<div style="float: right;  font-weight: bold; color:#cc0073; padding: 10px 4%; margin-top: 20px; margin-right: 320px;">* 상호명을 클릭 후 지도가 띄워지고 주소를 클릭하면 후기 화면으로 이동합니다.
 <br/> <span style="color: red; float:center;">단, 로그인은 필수 입니다.</span>
 </div>
-<div id="list-top"  style="width :42%; margin-left: 30px;"> 
+<div id="list-top"  style="width :41%;"> 
 <form action="data" method="post">
    <div class="box" >
       <ul>

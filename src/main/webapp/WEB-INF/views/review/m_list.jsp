@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -39,7 +40,7 @@ a.btn-fill { margin-right: 0px; }
                   </c:forEach>
                </select> --%>
       <div class="box">
-         <ul>            
+       <%--   <ul>            
             <li>
                <select name="search" class="w-px120"  id="hair_category" onchange="$('form').submit()">
                   <option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
@@ -49,7 +50,7 @@ a.btn-fill { margin-right: 0px; }
                   <option value="style" ${page.search eq 'style' ? 'selected' : '' }>스타일링</option>                  
                </select>
             </li>   
-         </ul>
+         </ul> --%>
          
          <!-- 몇개씩 글목록을 보여지게 할것인지 하는곳 -->
          <ul>
@@ -153,31 +154,3 @@ a.btn-fill { margin-right: 0px; }
    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

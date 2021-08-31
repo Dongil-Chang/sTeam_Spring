@@ -99,16 +99,10 @@ table.tb_list tr { height: 60px; }
 			<td>${vo.no}</td>
 			<td>${vo.q_type}</td>
 			<td class='left'>
-				<c:if test="${vo.q_indent > 0 }">
 					<c:forEach begin="1" end="${vo.q_indent}" var="i">
 						${i eq vo.q_indent ? "<img src='imgs/re.gif'/>" : "&nbsp;&nbsp;"}
-						<a href='a_detail.qa?q_id=${vo.q_id}&curPage=${QnaPage.curPage}&search=${QnaPage.search}&keyword=${QnaPage.keyword}&id=${id}&name=${name}'>${vo.q_title }</a>
 					</c:forEach>
-				</c:if>
-				
-				<c:if test="${vo.q_indent == 0 }">
-				<a href='a_detail.qa?q_id=${vo.q_id}&curPage=${QnaPage.curPage}&search=${QnaPage.search}&keyword=${QnaPage.keyword}&id=${id}&name=${name}'>${vo.q_title }</a>
-				</c:if>
+					<a href='a_detail.qa?q_id=${vo.q_id}&curPage=${QnaPage.curPage}&search=${QnaPage.search}&keyword=${QnaPage.keyword}&id=${id}&name=${name}'>${vo.q_title }</a>
 			</td>	
 			<td>${vo.q_name}</td>
 			<td>${vo.q_writedate}</td>

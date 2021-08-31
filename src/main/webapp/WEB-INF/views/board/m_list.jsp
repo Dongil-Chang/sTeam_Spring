@@ -15,7 +15,7 @@
 <input type="hidden" name="curPage" value='${page.curPage }'/>
 <input type="hidden" name="id" />
 <div>
-   <ul>
+ <%--   <ul>
       <li><select name='search' class='w-px90'>
          <option value='all' ${page.search eq 'all' ? 'selected' : ''}>전체</option>
          <option value='title' ${page.search eq 'title' ? 'selected' : ''}>제목</option>
@@ -27,7 +27,7 @@
       </li>
       <li><input type='text' name='keyword' value='${page.keyword}' class='w-px300'/></li>
       <li><a class='btn-se' onclick='$("form").submit()'>검색</a></li>
-   </ul>
+   </ul> --%>
    <ul>
       <li>
          <select name='pageList' class='w-px90' onchange="$('form').submit()">

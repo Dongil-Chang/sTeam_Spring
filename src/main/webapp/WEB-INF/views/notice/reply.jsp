@@ -20,10 +20,10 @@
 <input type='hidden' name='indent' value='${vo.indent}'/>
 <table>
 <tr><th class='w-px120'>제목</th>
-	<td><input type='text' name='title' class='chk' title='제목'/></td>
+	<td><input type='text' name='title' class='chk w-pct80' title='제목' /></td>
 </tr>
 <tr><th>내용</th>
-	<td><textarea name='content' class='chk' title='내용'></textarea> </td>
+	<td><textarea name='content' class='chk w-pct80' title='내용' style="resize:none; height: 370px; text-align: justify;"></textarea> </td>
 </tr>
 <tr><th>첨부파일</th>
 	<td class='left'>

@@ -11,7 +11,9 @@
 	<br/>
 	<ul>
 		<!-- 관리자로 로그인된 경우만 회원관리 페이지에 접근 가능하도록 할 예정 -->
+		<c:if test="${loginInfo.admin eq 'Y' }">
 		<li><a href='list.cu' class='${category eq "cu" ? "active" : ""}'>Admin</a></li>
+		</c:if>
 		<!-- 관리자로 로그인된 경우만 회원관리 페이지에 접근 가능하도록 할 예정 -->
 		
 		<!-- 헤어샵 지도 페이지  -->
