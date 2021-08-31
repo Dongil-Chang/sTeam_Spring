@@ -5,7 +5,7 @@ a { margin: 0 7px; }
 
 a:hover { color: gray; }
 
-footer { margin-top: 150px;}
+footer { margin-top: 150px; border-top: 1px solid #ddd;}
 
 </style>
 

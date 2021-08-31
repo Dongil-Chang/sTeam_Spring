@@ -280,7 +280,7 @@ public class ReviewController {
 	// 관리자 모드에서 리뷰 글 삭제처리 요청
 	@RequestMapping("/a_delete.re")
 	public String a_delete(int id, Model model, HttpSession session, int curPage, String search
-			, String keyword,  String name, String u_id) throws Exception{
+			, String keyword,  String name, String u_id, int pageList, String viewType) throws Exception{
 		
 		//첨부파일이 있는 글에 대해서는 해당 파일을 서버의 물리적 영역에서 삭제
 		ReviewVO vo = service.review_detail(id);
@@ -296,10 +296,49 @@ public class ReviewController {
 		service.review_delete(id);
 		//return "redirect:list.bo";
 		
-		return "redirect:re_list.cu?id="+u_id+"&name="+ URLEncoder.encode(name, "utf-8")+"&curPage="+ curPage+"&search="+search+"&keyword="+keyword;
+		return "redirect:re_list.cu?id="+u_id+"&name="+ URLEncoder.encode(name, "utf-8")+"&curPage="+ curPage+"&search="+search+"&keyword="+keyword+"&pageList="+pageList+"&viewType="+viewType;
 	}
 	
 	
+	
+	
+		//마이페이지 리뷰 삭제
+	   @RequestMapping("/mdelete.re")
+	   public String mdelete(int id, Model model, HttpSession session) {
+	      //첨부파일이 있는 글에 대해서는 해당 파일을 서버의 물리적 영역에서 삭제
+	      ReviewVO vo = service.review_detail(id);
+	      if(vo.getRv_filename() != null) {
+	         File file = new File(session.getServletContext().getRealPath("resources") + "/" + vo.getRv_filepath() );
+	         
+	         if(file.exists() ) {
+	            file.delete();
+	         }//if
+	      }//if
+	      
+	      //해당 리뷰 글을 DB에서 삭제한 후 목록화면으로 연결
+	      service.review_delete(id);
+	      //return "redirect:list.bo";
+	      model.addAttribute("uri", "mrlist.mp");
+	      model.addAttribute("page", page);
+	      return "review/redirect";}
+	
+	
+	   
+	   //마이페이지 상세화면 요청
+	   @RequestMapping("/mdetail.re")
+	   public String mdetail(int id, Model model, @RequestParam(required = false)Integer curPage) {
+	      service.review_read(id);
+	      
+	      if(curPage!=null) page.setCurPage(curPage); //홈에서 클릭한 경우
+	      
+	      //해당 리뷰 글을 DB에서 조회해와 상세화면에 출력
+	      model.addAttribute("vo", service.review_detail(id));
+	      model.addAttribute("crlf", "\r\n"); //\r\n 엔터
+	      model.addAttribute("page", page); //목록으로 가는데 사용할 정보 
+	      return "review/m_details";
+	   }
+	   
+	   
 	
 	
 	

@@ -51,14 +51,14 @@ table.tb_list tr { height: 60px; }
 
 </head>
 <body>
-<h3>${name }님 QnA 글 목록 화면입니다.</h3>
+<h3><span style="color: purple;">${name }</span>님 QnA 글 목록 화면입니다.</h3>
 
 <form action="qna_list.cu" method="post">
 <input type="hidden" name="curPage" value="1"/>
 <input type="hidden" name="id" value="${id}"/>
 <div id="list-top"> 
 	<div class="box">
-		<ul style="margin-left: 185px;">
+		<ul style="margin-left: 208px;">
 			<li>
 				<select name="search" class="w-px90">
 					<option value="all" ${QnaPage.search eq 'all' ? 'selected' : '' }>제목 + 내용</option>

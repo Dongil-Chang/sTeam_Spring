@@ -52,7 +52,7 @@ table.tb_list tr { height: 60px; }
 </head>
 <body>
 
-<h3>${name }님 커뮤니티 글 목록 화면입니다.</h3>
+<h3><span style="color: purple;">${name }</span>님 커뮤니티 글 목록 화면입니다.</h3>
 
 <div id='list-top'>
 
@@ -64,7 +64,7 @@ table.tb_list tr { height: 60px; }
 <input type="hidden" name="name" value="${name }" />
 
 <div class="box">
-	<ul style="margin-left: 190px;">
+	<ul style="margin-left: 213px;">
 		<li>
 			<select name='search' class='w-px90'>
 			<option value='all' ${CoPage.search eq 'all' ? 'selected' : ''}>전체</option>

@@ -125,14 +125,13 @@ thead tr th { letter-spacing: 2px; }
 <table class="w-pct80 tb_list">
 <thead>	
 	<tr>
-		<th class="w-px50">번호</th>
 		<th class="w-px80">회원등급</th>
 		<th class="w-px80">고객명</th>
 		<th class="w-px60">성별</th>
 		<th class="w-px100">생년월일</th>
 		<th class="w-px280">주소</th>
 		<th>전화번호</th>
-		<th>이메일</th>
+		<th class="w-px200">이메일</th>
 		<th colspan="5">관리자 기능</th>
 	</tr>
 </thead>
@@ -163,7 +162,6 @@ thead tr th { letter-spacing: 2px; }
 		
 		<c:forEach items="${page.list }" var="vo">
 			<tr class="item">
-				<td>${vo.no }</td>
 				<c:if test="${vo.admin eq 'N' }">
 					<td style="color: purple;">일반회원</td>
 				</c:if>

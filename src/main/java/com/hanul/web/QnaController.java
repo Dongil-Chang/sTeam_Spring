@@ -167,6 +167,7 @@ public class QnaController {
 		service.qna_delete(q_id);
 		return "redirect:list.qa";
 	}
+
 	
 	
 	
@@ -381,5 +382,39 @@ public class QnaController {
 			
 			return "qna/list";
 		}
+		
+		
+		
+
+		//마이페이지글 상세화면 요청
+			@RequestMapping("/mdetail.qa")
+			public String mdetail(int q_id,  Model model) { 
+				service.qna_read(q_id); //조회수 증가시키기
+				//선택한 공지사항 정보를 DB에서 조회해 와 상세화면에 출력
+				model.addAttribute("vo", service.qna_detail(q_id));
+				model.addAttribute("crlf", "\r\n");
+				model.addAttribute("page", page);
+				return "qna/m_detail";
+			}
+			
+		//마이페이지QnA글 삭제처리 요청
+			@RequestMapping("/mdelete.qa")
+			public String mdelete(int q_id, HttpSession session) {
+				//첨부파일이 있는 글의 경우 디스크에서 첨부파일을 삭제한다
+				QnaVO qna = service.qna_detail(q_id);
+				String uuid =  session.getServletContext().getRealPath("resources") 
+								+ "/" + qna.getQ_filepath();
+				if( qna.getQ_filename()!=null ) {
+					File file = new File(uuid);
+					if( file.exists() ) file.delete();
+				}
+				
+				//해당 QnA글 정보를 DB에서 삭제한 후 목록화면으로 연결
+				service.qna_delete(q_id);
+				return "redirect:mqlist.mp";
+			}
+			
+		
+		
 	
 }

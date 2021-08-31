@@ -49,7 +49,7 @@ table.tb_list tr { height: 60px; }
 
 </head>
 <body>
-<h3>${name }님 후기작성 목록 화면입니다.</h3>
+<h3><span style="color: purple;">${name }</span>님 후기작성 목록 화면입니다.</h3>
 	
 <div id="list-top">
 <form action="re_list.cu" method="post">
@@ -65,7 +65,7 @@ table.tb_list tr { height: 60px; }
 					</c:forEach>
 				</select> --%>
 	<div class="box">
-		<ul style="margin-left: 190px;">				
+		<ul style="margin-left: 213px;">				
 			<li>				<!-- onchange="$('form').submit()" -->
 				<select name="search" class="w-px120"  id="hair_category" >
 					<option value="all" ${RePage.search eq 'all' ? 'selected' : '' }>전체</option>

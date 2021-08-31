@@ -63,7 +63,7 @@ public class MypageController {
 		map.put("id", id);
 				
 		model.addAttribute("page", ms_service.style_ms_list(map));
-		return "Style/list";
+		return "Style/m_list";
 	}
 	
 	@RequestMapping("/mqlist.mp")
@@ -75,7 +75,7 @@ public class MypageController {
 		map.put("id", id);
 				
 		model.addAttribute("page", mq_service.qna_mq_list(map));
-		return "qna/list";
+		return "qna/m_list";
 	}
 
 	/*
@@ -91,7 +91,7 @@ public class MypageController {
 		map.put("id", id);
 				
 		model.addAttribute("page", mc_service.board_mc_list(map));
-		return "board/list";
+		return "board/m_list";
 	}
 	
 	@RequestMapping("/mrlist.mp")
@@ -103,7 +103,7 @@ public class MypageController {
 		map.put("id", id);
 				
 		model.addAttribute("page", mr_service.review_mr_list(map));
-		return "review/list";
+		return "review/m_list";
 	}
 	
 	@RequestMapping("/delete.mp")

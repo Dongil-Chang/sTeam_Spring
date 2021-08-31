@@ -9,8 +9,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+
 table tr td {
 	text-align: left;
+}
+
+.button {
+	text-align: center;
 }
 
 .addr input:not(:last-child) {
@@ -33,12 +38,18 @@ table tr td {
 .invalid {
 	color: red;
 }
+
+table { width: 40%; }
+
+
+
+
 </style>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
-	<h3>[ ${vo.name} ] 님 회원정보수정</h3>
+	<h3 style="margin-top: 100px;">[ ${vo.name} ] 님 회원정보수정</h3>
 	<form action="update.mp" method="post" enctype="multipart/form-data">
 		<input type='hidden' name='attach' /> <input type='hidden' name='id'
 			value='${vo.id}' />
@@ -98,9 +109,9 @@ table tr td {
 				</tr>
 			</tbody>
 			<tr class='btnSet' style="text-align: center;">
-				<td colspan="2"><a class='btn-fill'
-					onclick='fn_submit()'>저장</a> <!-- 		<a class='btn-fill' href='javascript:$("form").submit()'>저장</a> -->
-					<a class='btn-empty' href='list.mp?id=${vo.id}'>취소</a></td>
+				<td colspan="2" class="button"><a class='btn-fill' onclick='fn_submit()'>저장</a> <!-- 		<a class='btn-fill' href='javascript:$("form").submit()'>저장</a> -->
+								<a class='btn-empty' href='list.mp?id=${vo.id}'>취소</a>
+				</td>
 			</tr>
 		</table>
 	</form>

@@ -24,7 +24,6 @@
 	margin: 0 auto;
 	/* padding-top: 20px; */
 	width: 500px;
-	margin-top: 70px;
 }
 
 #reply-regist {
@@ -96,7 +95,7 @@ tr, th, td {
 
 	<div class="btnSet">
 		<c:if test="${empty code }">
-			<a class="btn-fill" onclick="$('form').submit()">목록으로</a>
+			<a class="btn-fill" href="mrlist.mp?id=${loginInfo.id }">목록으로</a>
 		</c:if>
 
 		<c:if test="${code == 1 }">
@@ -119,7 +118,7 @@ tr, th, td {
 			<c:if
 				test="${loginInfo.id eq vo.rv_writer || loginInfo.admin eq 'Y'}">
 				<a class='btn-fill'
-					onclick="if( confirm('정말 삭제하시겠습니까?') ){ href='delete.re?id=${vo.rv_id}' }">삭제</a>
+					onclick="if( confirm('정말 삭제하시겠습니까?') ){ href='mdelete.re?id=${vo.rv_id}' }">삭제</a>
 			</c:if>
 		</c:if>
 
@@ -129,7 +128,8 @@ tr, th, td {
 			<c:if
 				test="${loginInfo.admin eq 'Y' || ( loginInfo.admin eq 'Y' && vo.rv_writer eq loginInfo.id ) }">
 				<a class='btn-fill'
-					onclick="if( confirm('정말 삭제 하시겠습니까??') ){ href='a_delete.re?id=${vo.rv_id}&curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword}&u_id=${u_id}&name=${name}&pageList=${page.pageList }&viewType=${page.viewType} '}">관리자권한삭제</a>
+					onclick="if( confirm('정말 삭제 하시겠습니까??') ){ href='a_delete.re?id=${vo.rv_id}&curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword}&u_id=${u_id}&name=${name} '}">관리자권한
+					삭제</a>
 			</c:if>
 		</c:if>
 
@@ -148,7 +148,7 @@ tr, th, td {
 	<!-- z-index 효과를 위해 이 부분을 먼저 만들고 아래를 만들면된다.  -->
 	<div id="popup" class="center"></div>
 
-	<form method="post" action='list.re'>
+	<form method="post" action='mlist.re'>
 		<input type='hidden' name='id' value='${vo.rv_id}' /> <input
 			type='hidden' name='search' value='${page.search}' /> <input
 			type='hidden' name='keyword' value='${page.keyword}' /> <input

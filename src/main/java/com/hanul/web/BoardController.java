@@ -145,8 +145,7 @@ public class BoardController {
 		model.addAttribute("page", page); //목록으로 가는데 사용할 정보
 		return "board/detail";
 	}
-		
-		
+	
 	
 	// 관리자 모드 커뮤니티 상세화면 요청
 	@RequestMapping("/a_detail.fb")
@@ -300,6 +299,46 @@ public class BoardController {
 		model.addAttribute("page", service.board_list(page));
 		return "board/list";
 	}
+	
+	
+	
+	
+	
+
+	 //마이페이지상세요청
+	   @RequestMapping("/mdetail.fb")
+	   public String mdetail(int id, Model model, @RequestParam(required = false ) Integer curPage) {
+	      service.board_read(id);
+	   
+	      if(curPage!=null) page.setCurPage(curPage); //홈에서 클릭한 경우
+	      
+	      //해당 방명록 글을 DB에서 조회해와 상세화면에 출력
+	      model.addAttribute("vo", service.board_detail(id));
+	      model.addAttribute("crlf", "\r\n");
+	      model.addAttribute("page", page); //목록으로 가는데 사용할 정보
+	      return "board/m_detail";
+	   }
+	   
+	 //마이페이지커뮤니티 글 삭제처리 요청
+	   @RequestMapping("/mdelete.fb")
+	   public String mdelete(int id, Model model, HttpSession session) {
+	      //첨부파일이 있는 글에 대해서는 해당 파일을 서버의 물리적 영역에서 삭제
+	      BoardVO vo = service.board_detail(id);
+	      if( vo.getFilename() != null ) {
+	         File file 
+	            = new File( session.getServletContext().getRealPath("resources") 
+	                  + "/" + vo.getFilepath() );
+	         if( file.exists() ) file.delete();
+	      }
+	      
+	      //해당 커뮤니티 글을 DB에서 삭제한 후 목록화면으로 연결
+	      service.board_delete(id);
+	      //return "redirect:list.bo";
+	      model.addAttribute("uri", "mclist.mp");
+	      model.addAttribute("page", page);
+	      return "board/redirect";
+	   }
+		
 	
 	
 
