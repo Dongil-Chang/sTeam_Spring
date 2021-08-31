@@ -20,7 +20,7 @@
    color : #8338ec;
 }
 
-#popup-background { position: absolute; left: 0; top: 230px; width: 100%; height: 100%;
+#popup-background { position: absolute; left: 0; top: 0px; width: 100%; height: 100%;
                background-color: #000; opacity: 0.3; display: none;
               }
 

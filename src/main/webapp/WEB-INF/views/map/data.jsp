@@ -22,11 +22,24 @@
 <script type="text/javascript">
 
 var pageList=10, blockPage=10;
-
-
-
+function resize(){
+	$('#popup-background').css('height',  $('body').prop('scrollHeight') );
+}
+$(window).resize(function(){
+	moveCenter();
+});
+$(window).scroll(function(){
+	moveCenter();
+});
+function moveCenter(){
+	$('#popup').removeClass('center');
+	var left = ( $(window).width()-$('#popup').width() ) / 2 + $(window).scrollLeft();
+	var top = ( $(window).height()-$('#popup').height() ) / 2 + $(window).scrollTop();
+	$('#popup').css({ "left": left, "top": top });
+}
 
 $(function(){
+	
 	shop_list(1);
 
 });
@@ -39,7 +52,7 @@ function shop_list(pageNo){
 // 			console.log( response );
 			$('#shop_list').html(response);
 			makePage(pageNo);
-			
+			resize();
 		},error: function(req, text){
 			
 			alert(text+":"+req.status);
